@@ -1,0 +1,113 @@
+<?php
+
+module_load_include('inc', 'content_rewriter', 'content_rewriter_functions');
+
+function feeds_content_rewriter_feeds_after_parse($source, $result) {
+    $form_state_values = variable_get('feeds_content_rewriter_form_state_values', array());
+
+    /*$form_selection = implode('',array(
+        $form_state_values['stopwords_only'],
+        $form_state_values['spintax_output'],
+        $form_state_values['rewrite_after_spin']
+    ));
+
+    if ($form_state_values['rewrite_content'] == TRUE) {
+        switch($form_selection) {
+            case '000':
+                foreach($result -> items as $key => $item) {
+                    $result -> items[$key]['description'] = mb_string_convert($item['description'], NULL, $form_state_values['ignored_words']);
+                }
+                break;
+            case '100':
+                foreach($result -> items as $key => $item) {
+                    $result -> items[$key]['description'] = mb_string_convert($item['description'], $form_state_values['stopwords'], $form_state_values['ignored_words']);
+                }
+                break;
+            default:
+                break;
+        }*/
+    //}
+
+    foreach($result -> items as $key => $item) {
+        $result -> items[$key]['description'] = mb_string_convert($item['description'], explode("\n", $form_state_values['stopwords']), explode("\n", $form_state_values['ignored_words']));//, $form_state_values['stopwords'], $form_state_values['ignored_words']);
+    }
+
+    dsm($result);
+}
+
+function feeds_content_rewriter_form_alter(&$form, &$form_state, $form_id) {
+    if($form_id == 'feed_node_form') {
+        $form['content_rewriter'] = array (
+            '#type' => 'fieldset',
+            '#title' => 'Content Rewriter',
+            '#collapsible' => TRUE,
+            '#collapsed' => TRUE,
+            '#weight' => 100,
+            '#group' => 'additional_settings'
+        );
+
+        $form['content_rewriter']['rewrite_content'] = array (
+            '#type' => 'checkbox',
+            '#title' => 'Rewrite Content'
+        );
+
+        $form['content_rewriter']['stopwords'] = array (
+            '#type' => 'textarea',
+            '#title' => 'Stopwords',
+            '#description' => 'Enter words that you would like rewritten.',
+            '#resizeable' => TRUE
+        );
+
+        $form['content_rewriter']['ignored_words'] = array (
+            '#type' => 'textarea',
+            '#title' => 'Ignored Words',
+            '#description' => 'Enter words that you would not want rewritten.',
+            '#resizeable' => TRUE
+        );
+
+        $form['content_rewriter']['stopwords_only'] = array (
+            '#type' => 'checkbox',
+            '#title' => 'Stopwords Only'
+        );
+
+        $form['content_rewriter']['spintax_output'] = array (
+            '#type' => 'checkbox',
+            '#title' => 'Spintax Output'
+        );
+
+        $form['content_rewriter']['rewrite_after_spin'] = array (
+            '#type' => 'checkbox',
+            '#title' => 'Rewrite After Spinning'
+        );
+
+        $form['#validate'][] = 'feeds_content_rewriter_form_validate';
+        $form['#submit'][] = 'feeds_content_rewriter_form_submit';
+    }
+}
+
+function feeds_content_rewriter_feeds_after_import($source) {
+    variable_del('feeds_content_rewriter_form_state_values');
+}
+
+function feeds_content_rewriter_form_validate($form, &$form_state) {
+    $form_state_values = $form_state['values'];
+    if($form_state_values['rewrite_content'] == TRUE) {
+        if($form_state_values['stopwords_only'] && $form_state_values['spintax_output'] && !$form_state_values['rewrite_after_spin']) {
+            form_set_error('rewrite_after_spin', 'Please check the rewrite after spin checkbox if you want to rewrite on stopwords.');
+        }
+
+        if(!$form_state_values['spintax_output'] && $form_state_values['rewrite_after_spin']) {
+           form_set_error('rewrite_after_spin', 'Please check the spintax output checkbox if you want to rewrite after spinning content.');
+        }
+
+        if($form_state_values['stopwords_only'] && empty($form_state_values['stopwords'])) {
+            form_set_error('stopwords', 'Stopwords checked, but no stopwords exist.');
+        }
+    }
+
+    dsm($form_state_values);
+}
+
+function feeds_content_rewriter_form_submit($form, &$form_state) {
+    variable_set('feeds_content_rewriter_form_state_values', $form_state['values']);
+}
