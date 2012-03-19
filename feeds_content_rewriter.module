@@ -5,6 +5,30 @@ module_load_include('inc', 'content_rewriter', 'content_rewriter_functions');
 function feeds_content_rewriter_feeds_after_parse($source, $result) {
     $form_state_values = variable_get('feeds_content_rewriter_form_state_values', array());
 
+    if($form_state_values['rewrite_content'] == TRUE) {
+        if(is_array($form_state_values['stopwords']) && !empty($form_state_values['stopwords'])) {
+            $stopwords = explode("\n", $form_state_values['stopwords']);
+        }
+        else {
+            $stopwords = NULL;
+        }
+
+        if(is_array($form_state_values['ignored_words']) && !empty($form_state_values['ignored_words'])) {
+            $ignored_words = explode("\n", $form_state_values['ignored_words']);
+        }
+        else {
+            $ignored_words = NULL;
+        }
+
+        if($form_state_values['stopwords_only'] && !$form_state_values['spintax_output']) {
+            foreach($result -> items as $key => $item) {
+                $result -> items[$key]['description'] = mb_string_convert($item['description'], $stopwords, $ignored_words);//, $form_state_values['stopwords'], $form_state_values['ignored_words']);
+            }
+        }
+        else if($form_state_values['spintax_output'] && !$form_state_values['rewrite_after_spin']) {
+            
+        }
+    }
     /*$form_selection = implode('',array(
         $form_state_values['stopwords_only'],
         $form_state_values['spintax_output'],
