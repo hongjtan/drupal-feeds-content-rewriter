@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/feeds_content_rewriter.module" line="5" />
-  </component>
   <component name="ChangeListManager">
     <list default="true" id="44684e39-40bd-43bc-a100-67b6df586459" name="Default" comment="">
       <change type="DELETED" beforePath="$PROJECT_DIR$/content_rewriter_functions.inc" afterPath="" />
@@ -51,7 +48,7 @@
       <file leaf-file-name="feeds_content_rewriter.module" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/feeds_content_rewriter.module">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="11" selection-start="525" selection-end="525" vertical-scroll-proportion="0.29605263">
+            <state line="5" column="72" selection-start="350" selection-end="350" vertical-scroll-proportion="0.098684214">
               <folding />
             </state>
           </provider>
@@ -370,7 +367,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/feeds_content_rewriter.module">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="11" selection-start="525" selection-end="525" vertical-scroll-proportion="0.29605263">
+        <state line="5" column="72" selection-start="350" selection-end="350" vertical-scroll-proportion="0.098684214">
           <folding />
         </state>
       </provider>

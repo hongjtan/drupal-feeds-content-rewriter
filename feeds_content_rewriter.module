@@ -1,10 +1,6 @@
 <?php
 function feeds_content_rewriter_feeds_after_parse($source, $result) {
     $form_state_values = variable_get('feeds_content_rewriter_form_state_values', array());
-
-    dsm($form_state_values['stopwords']);
-    dsm(is_array($form_state_values['stopwords']));
-
     if($form_state_values['rewrite_content'] == TRUE) {
         if(!empty($form_state_values['stopwords'])) {
             $stopwords = explode("\n", $form_state_values['stopwords']);
