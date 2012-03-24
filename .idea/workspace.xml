@@ -48,7 +48,7 @@
       <file leaf-file-name="feeds_content_rewriter.module" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/feeds_content_rewriter.module">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="49" column="47" selection-start="2317" selection-end="2317" vertical-scroll-proportion="0.96710527">
+            <state line="0" column="5" selection-start="5" selection-end="5" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -351,13 +351,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/feeds_content_rewriter.info">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="18" selection-start="168" selection-end="168" vertical-scroll-proportion="-37.5">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/feeds_content_rewriter_functions.inc">
       <provider selected="true" editor-type-id="text-editor">
         <state line="8" column="47" selection-start="296" selection-end="296" vertical-scroll-proportion="0.0">
@@ -365,9 +358,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/feeds_content_rewriter.info">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="18" selection-start="168" selection-end="168" vertical-scroll-proportion="-37.5">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/feeds_content_rewriter.module">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="47" selection-start="2317" selection-end="2317" vertical-scroll-proportion="0.96710527">
+        <state line="0" column="5" selection-start="5" selection-end="5" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>

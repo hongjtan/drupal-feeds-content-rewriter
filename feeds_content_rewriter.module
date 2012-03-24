@@ -1,7 +1,4 @@
 <?php
-
-//module_load_include('inc', 'feeds_content_rewriter', 'feeds_content_rewriter_functions');
-
 function feeds_content_rewriter_feeds_after_parse($source, $result) {
     $form_state_values = variable_get('feeds_content_rewriter_form_state_values', array());
 
@@ -51,8 +48,6 @@ function feeds_content_rewriter_feeds_after_parse($source, $result) {
             }
         }
     }
-
-    dsm($result);
 }
 
 function feeds_content_rewriter_form_alter(&$form, &$form_state, $form_id) {
@@ -124,8 +119,6 @@ function feeds_content_rewriter_form_validate($form, &$form_state) {
             form_set_error('stopwords', 'Stopwords checked, but no stopwords exist.');
         }
     }
-
-    dsm($form_state_values);
 }
 
 function feeds_content_rewriter_form_submit($form, &$form_state) {
