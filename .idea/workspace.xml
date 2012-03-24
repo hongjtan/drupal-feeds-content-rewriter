@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="44684e39-40bd-43bc-a100-67b6df586459" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/content_rewriter_functions.inc" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/feeds_content_rewriter.info" afterPath="$PROJECT_DIR$/feeds_content_rewriter.info" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/feeds_content_rewriter.module" afterPath="$PROJECT_DIR$/feeds_content_rewriter.module" />
     </list>
     <ignored path="feeds_content_rewriter.iws" />
@@ -25,10 +27,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="content_rewriter_functions.inc" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/content_rewriter_functions.inc">
+      <file leaf-file-name="feeds_content_rewriter.info" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/feeds_content_rewriter.info">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="32" column="41" selection-start="1149" selection-end="1149" vertical-scroll-proportion="752.5">
+            <state line="5" column="18" selection-start="168" selection-end="168" vertical-scroll-proportion="-37.5">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="feeds_content_rewriter_functions.inc" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/feeds_content_rewriter_functions.inc">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="8" column="47" selection-start="296" selection-end="296" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -37,7 +48,7 @@
       <file leaf-file-name="feeds_content_rewriter.module" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/feeds_content_rewriter.module">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="12" selection-start="1288" selection-end="1288" vertical-scroll-proportion="0.8045977">
+            <state line="49" column="47" selection-start="2317" selection-end="2317" vertical-scroll-proportion="0.96710527">
               <folding />
             </state>
           </provider>
@@ -51,23 +62,26 @@
     </FindUsagesManager>
   </component>
   <component name="Git.Settings">
+    <option name="CHECKOUT_INCLUDE_TAGS" value="false" />
+    <option name="UPDATE_CHANGES_POLICY" value="STASH" />
     <option name="LINE_SEPARATORS_CONVERSION" value="ASK" />
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/feeds_content_rewriter.info" />
         <option value="$PROJECT_DIR$/content_rewriter_functions.inc" />
+        <option value="$PROJECT_DIR$/../../../../test.php" />
+        <option value="$PROJECT_DIR$/feeds_content_rewriter.info" />
         <option value="$PROJECT_DIR$/feeds_content_rewriter.module" />
       </list>
     </option>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="y" value="30" />
-    <option name="width" value="1024" />
-    <option name="height" value="714" />
+    <option name="x" value="-1" />
+    <option name="y" value="24" />
+    <option name="width" value="1922" />
+    <option name="height" value="938" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -146,14 +160,19 @@
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="options.lastSelected" value="preferences.lookFeel" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="options.lastSelected" value="editor.preferences.appearance" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../.." />
     <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
   </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/../../../../../test.dev" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
-      <TestRunner />
+      <TestRunner scope="Class" />
       <method>
         <option name="PhingTarget" enabled="false" />
       </method>
@@ -166,7 +185,7 @@
     <list size="0" />
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
-  <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false">
+  <component name="SvnConfiguration" maxAnnotateRevisions="500">
     <option name="USER" value="" />
     <option name="PASSWORD" value="" />
     <option name="mySSHConnectionTimeout" value="30000" />
@@ -193,14 +212,14 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="30" width="1024" height="714" extended-state="6" />
+    <frame x="-1" y="24" width="1922" height="938" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2587269" sideWeight="0.9964349" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26495728" sideWeight="0.9964349" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -248,10 +267,7 @@
     <option name="INCLUDE_TEXT_INTO_PATCH" value="false" />
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
     <option name="CREATE_PATCH_EXPAND_DETAILS_DEFAULT" value="true" />
-    <option name="SHOW_FILE_HISTORY_DETAILS" value="true" />
-    <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
     <option name="LAST_COMMIT_MESSAGE" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
@@ -311,44 +327,47 @@
         <state line="117" column="3" selection-start="3717" selection-end="3717" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/feeds_content_rewriter.info">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="38" selection-start="188" selection-end="188" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../feeds/feeds_ui/feeds_ui.admin.inc">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="325" column="30" selection-start="11778" selection-end="11778" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1309300798000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1309300798000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1309300798000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1309300798000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1309300798000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1309300798000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1309300798000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1309300798000" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
-        </state>
+        <state line="325" column="30" selection-start="11778" selection-end="11778" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../feeds/feeds_import/feeds_import.feeds_importer_default.inc">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="27" selection-start="406" selection-end="408" vertical-scroll-proportion="0.0">
+        <state line="15" column="27" selection-start="406" selection-end="408" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../test.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="229" column="23" selection-start="9107" selection-end="9107" vertical-scroll-proportion="0.8425197">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/content_rewriter_functions.inc">
+    <entry file="file://$PROJECT_DIR$/../../../../../test.dev/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="41" selection-start="1149" selection-end="1149" vertical-scroll-proportion="752.5">
+        <state line="16" column="27" selection-start="600" selection-end="600" vertical-scroll-proportion="0.31496063">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/feeds_content_rewriter.info">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="18" selection-start="168" selection-end="168" vertical-scroll-proportion="-37.5">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/feeds_content_rewriter_functions.inc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="47" selection-start="296" selection-end="296" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/feeds_content_rewriter.module">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="12" selection-start="1288" selection-end="1288" vertical-scroll-proportion="0.8045977">
+        <state line="49" column="47" selection-start="2317" selection-end="2317" vertical-scroll-proportion="0.96710527">
           <folding />
         </state>
       </provider>

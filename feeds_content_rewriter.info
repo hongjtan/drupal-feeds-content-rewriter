@@ -3,4 +3,4 @@ description = Rewrites content imported from various sources to make unique cont
 core = 7.x
 dependencies[] = feeds
 
-files[] = ./content_rewriter_functions.inc
+files[] = ./feeds_content_rewriter_functions.inc

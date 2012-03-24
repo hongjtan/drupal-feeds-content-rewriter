@@ -1,6 +1,6 @@
 <?php
 
-module_load_include('inc', 'content_rewriter', 'content_rewriter_functions');
+//module_load_include('inc', 'feeds_content_rewriter', 'feeds_content_rewriter_functions');
 
 function feeds_content_rewriter_feeds_after_parse($source, $result) {
     $form_state_values = variable_get('feeds_content_rewriter_form_state_values', array());
@@ -22,38 +22,34 @@ function feeds_content_rewriter_feeds_after_parse($source, $result) {
 
         if($form_state_values['stopwords_only'] && !$form_state_values['spintax_output']) {
             foreach($result -> items as $key => $item) {
-                $result -> items[$key]['description'] = mb_string_convert($item['description'], $stopwords, $ignored_words);//, $form_state_values['stopwords'], $form_state_values['ignored_words']);
+                $result -> items[$key]['description'] = mb_string_convert($item['description'], $stopwords, $ignored_words);
             }
         }
-        else if($form_state_values['spintax_output'] && !$form_state_values['rewrite_after_spin']) {
-            
+        else if($form_state_values['spintax_output']) {
+            foreach($result -> items as $key => $item) {
+                $spun_string = spin_string($item['description'], 1);
+
+                if(is_array($spun_string)) {
+                    $result -> items[$key]['description'] = implode("", $spun_string);
+                }
+            }
+
+            if($form_state_values['rewrite_after_spin'] && !$form_state_values['stopwords_only']) {
+                foreach($result -> items as $key => $item) {
+                    $result -> items[$key]['description'] = mb_string_convert($item['description'], NULL, $ignored_words);
+                }
+            }
+            else if($form_state_values['rewrite_after_spin'] && $form_state_values['stopwords_only']) {
+                foreach($result -> items as $key => $item) {
+                    $result -> items[$key]['description'] = mb_string_convert($item['description'], $stopwords, $ignored_words);
+                }
+            }
         }
-    }
-    /*$form_selection = implode('',array(
-        $form_state_values['stopwords_only'],
-        $form_state_values['spintax_output'],
-        $form_state_values['rewrite_after_spin']
-    ));
-
-    if ($form_state_values['rewrite_content'] == TRUE) {
-        switch($form_selection) {
-            case '000':
-                foreach($result -> items as $key => $item) {
-                    $result -> items[$key]['description'] = mb_string_convert($item['description'], NULL, $form_state_values['ignored_words']);
-                }
-                break;
-            case '100':
-                foreach($result -> items as $key => $item) {
-                    $result -> items[$key]['description'] = mb_string_convert($item['description'], $form_state_values['stopwords'], $form_state_values['ignored_words']);
-                }
-                break;
-            default:
-                break;
-        }*/
-    //}
-
-    foreach($result -> items as $key => $item) {
-        $result -> items[$key]['description'] = mb_string_convert($item['description'], explode("\n", $form_state_values['stopwords']), explode("\n", $form_state_values['ignored_words']));//, $form_state_values['stopwords'], $form_state_values['ignored_words']);
+        else if(!$form_state_values['stopwords_only'] && !$form_state_values['spintax_output']) {
+            foreach($result -> items as $key => $item) {
+                $result -> items[$key]['description'] = mb_string_convert($item['description'], NULL, $ignored_words);
+            }
+        }
     }
 
     dsm($result);
