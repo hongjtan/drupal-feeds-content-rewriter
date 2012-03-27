@@ -1,4 +1,6 @@
 <?php
+module_load_include('inc', 'content_rewriter', 'content_rewriter_functions');
+
 function feeds_content_rewriter_feeds_after_parse($source, $result) {
     $form_state_values = variable_get('feeds_content_rewriter_form_state_values', array());
     if($form_state_values['rewrite_content'] == TRUE) {
