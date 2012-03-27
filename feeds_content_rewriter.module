@@ -1,5 +1,5 @@
 <?php
-module_load_include('inc', 'content_rewriter', 'content_rewriter_functions');
+module_load_include('inc', 'feeds_content_rewriter', 'feeds_content_rewriter_functions');
 
 function feeds_content_rewriter_feeds_after_parse($source, $result) {
     $form_state_values = variable_get('feeds_content_rewriter_form_state_values', array());
