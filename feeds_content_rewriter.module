@@ -58,7 +58,7 @@ function feeds_content_rewriter_form_alter(&$form, &$form_state, $form_id) {
             '#title' => 'Content Rewriter',
             '#collapsible' => TRUE,
             '#collapsed' => TRUE,
-            '#weight' => 100,
+            '#weight' => -10,
             '#group' => 'additional_settings'
         );
 
