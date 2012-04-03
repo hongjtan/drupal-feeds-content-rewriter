@@ -1,9 +1,10 @@
 <?php
+
 module_load_include('inc', 'feeds_content_rewriter', 'feeds_content_rewriter_functions');
 
 function feeds_content_rewriter_feeds_after_parse($source, $result) {
     $form_state_values = variable_get('feeds_content_rewriter_form_state_values', array());
-    if($form_state_values['rewrite_content'] == TRUE) {
+    if(isset($form_state_values['rewrite_content']) && $form_state_values['rewrite_content'] == TRUE) {
         if(!empty($form_state_values['stopwords'])) {
             $stopwords = explode("\n", $form_state_values['stopwords']);
         }

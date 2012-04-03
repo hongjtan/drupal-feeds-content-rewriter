@@ -2,5 +2,6 @@ name = Feeds Content Rewriter
 description = Rewrites content imported from various sources to make unique content.
 core = 7.x
 dependencies[] = feeds
+package = Feeds Addon
 
 files[] = ./feeds_content_rewriter_functions.inc
