@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Ranks system for drupal 6.x Install file
+ * Schema .install file for the Feeds Content Rewriter module. Functions to install/uninstall database tables.
  */
 
 /**

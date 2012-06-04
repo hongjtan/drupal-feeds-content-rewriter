@@ -1,11 +1,27 @@
 <?php
+/**
+ * @file
+ *
+ * Implements hook functions for the feeds_content_rewriter module.
+ */
 
+// Load the content rewriting functions for the module.
 module_load_include('inc', 'feeds_content_rewriter', 'feeds_content_rewriter_functions');
 
+/**
+ * Implements hook_node_insert().
+ *
+ * Inserts a database entry for the new feed if rewrite content was selected.
+ *
+ * @param $node
+ *  The node that is being inserted.
+ */
 function feeds_content_rewriter_node_insert($node) {
     if($node->type == 'feed') {
+        // Initial grab of the values submitted by the user on the form.
         $form_state_values = variable_get('feeds_content_rewriter_form_state_values', array());
 
+        // Grab all the values into a single array feed_data and write it into the database.
         if(isset($form_state_values['rewrite_content']) && $form_state_values['rewrite_content'] == TRUE) {
             $feed_data = array(
                 'nid' => $node->nid,
@@ -18,9 +34,53 @@ function feeds_content_rewriter_node_insert($node) {
             );
         }
         drupal_write_record('feeds_content_rewriter', $feed_data);
+
+        // Memory cleaning after inserting data to database.
+        variable_del('feeds_content_rewriter_form_state_values');
     }
 }
 
+/**
+ * Implements hook_node_update().
+ *
+ * Updates the database entry for the current feed after a feed node is updated or creates a new entry if it does not
+ * yet exist.
+ *
+ * @param $node
+ *  The node that is being updated.
+ */
+function feeds_content_rewriter_node_update($node) {
+    if($node -> type == 'feed') {
+        $nid = $node -> nid;
+        $form_state_values = variable_get('feeds_content_rewriter_form_state_values', array());
+
+        // If node ID is valid and the form values are not empty, update the database to reflect new values or add entry
+        // if necessary.
+        if(isset($nid) && $nid != 0 && !empty($form_state_values)) {
+            db_merge('feeds_content_rewriter')
+                ->key(array('nid' => $nid))
+                ->fields(array(
+                'nid' => $nid,
+                'rewrite_content' => $form_state_values['rewrite_content'],
+                'stopwords' => $form_state_values['stopwords'],
+                'ignored_words' => $form_state_values['ignored_words'],
+                'stopwords_only' => $form_state_values['stopwords_only'],
+                'spintax_output' => $form_state_values['spintax_output'],
+                'rewrite_after_spin' => $form_state_values['rewrite_after_spin']
+            ))
+                ->execute();
+        }
+    }
+}
+
+/**
+ * Implements hook_node_delete().
+ *
+ * Deletes the database entry for the feed that was just deleted.
+ *
+ * @param $node
+ *  The node is being deleted.
+ */
 function feeds_content_rewriter_node_delete($node) {
     if($node -> type == 'feed') {
         $nid = $node -> nid;
@@ -32,6 +92,16 @@ function feeds_content_rewriter_node_delete($node) {
     }
 }
 
+/**
+ * Implements hook_feeds_after_parse().
+ *
+ * Grabs data from the database for rewriting or if it doesn't exist, grab data from the form.
+ *
+ * @param $source
+ *  FeedsSource object that describes the source that is being imported.
+ * @param $result
+ *  FeedsParserResult object that has been parsed from the source.
+ */
 function feeds_content_rewriter_feeds_after_parse($source, $result) {
     // Query the database to see if the current node already exists.
     $db_result = db_query("SELECT * FROM {feeds_content_rewriter} WHERE nid = :nid", array(':nid' => $source->feed_nid));
@@ -106,6 +176,16 @@ function feeds_content_rewriter_feeds_after_parse($source, $result) {
     }
 }
 
+/**
+ * Implements hook_form_alter().
+ *
+ * Creates a form based on values of the entry for the current node in the database or sets it to the default values
+ * if a record doesn't exist in he database.
+ *
+ * @param $form
+ * @param $form_state
+ * @param $form_id
+ */
 function feeds_content_rewriter_form_alter(&$form, &$form_state, $form_id) {
     if($form_id == 'feed_node_form') {
         // Default values for the form.
@@ -213,10 +293,26 @@ function feeds_content_rewriter_form_alter(&$form, &$form_state, $form_id) {
     }
 }
 
+/**
+ * Implements hook_feeds_after_import().
+ *
+ * Removes the unnecessary form state values variable after all the data is used.
+ *
+ * @param $source
+ *  FeedsSource object that describes the source that is being imported.
+ */
 function feeds_content_rewriter_feeds_after_import($source) {
     variable_del('feeds_content_rewriter_form_state_values');
 }
 
+/**
+ * Validation callback function for content rewriter form submission.
+ *
+ * Checks to see if information was entered correctly before parsing any data.
+ *
+ * @param $form
+ * @param $form_state
+ */
 function feeds_content_rewriter_form_validate($form, &$form_state) {
     $form_state_values = $form_state['values'];
     if($form_state_values['rewrite_content'] == TRUE) {
@@ -234,26 +330,15 @@ function feeds_content_rewriter_form_validate($form, &$form_state) {
     }
 }
 
+/**
+ * Submission callback for the content rewriter form.
+ *
+ * Saves a variable containing all the user submitted data for use in other hooks and callbacks.
+ *
+ * @param $form
+ * @param $form_state
+ */
 function feeds_content_rewriter_form_submit($form, &$form_state) {
+    // Save all the form submission data for use in other functions.
     variable_set('feeds_content_rewriter_form_state_values', $form_state['values']);
-
-    // Get the current node ID and update the database entry.
-    if (arg(0) == 'node' && is_numeric(arg(1))) $nid = arg(1);
-    $form_state_values = $form_state['values'];
-
-    // If node ID is set, update the database to reflect new values or add entry if necessary.
-    if(isset($nid)) {
-        db_merge('feeds_content_rewriter')
-            ->key(array('nid' => $nid))
-            ->fields(array(
-                'nid' => $nid,
-                'rewrite_content' => $form_state_values['rewrite_content'],
-                'stopwords' => $form_state_values['stopwords'],
-                'ignored_words' => $form_state_values['ignored_words'],
-                'stopwords_only' => $form_state_values['stopwords_only'],
-                'spintax_output' => $form_state_values['spintax_output'],
-                'rewrite_after_spin' => $form_state_values['rewrite_after_spin']
-            ))
-            ->execute();
-    }
 }
