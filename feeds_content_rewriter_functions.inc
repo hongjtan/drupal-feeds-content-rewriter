@@ -28,11 +28,11 @@
             while($char_counter < strlen($string))
             {
                 // If the letter matches one of the keys in the special character
-                // array, randomize a number. If <= 50, use special letter, else
+                // array, randomize a number. If <= 75, use special letter, else
                 // use the original character.
                 if (array_key_exists($string[$char_counter], $special_characters))
                 {
-                    if(mt_rand(1, 100) <= 60)
+                    if(mt_rand(1, 100) <= 75)
                     {
                         $new_multibyte_string[$multibyte_char_counter] = $special_characters[$string[$char_counter]];
                         $multibyte_char_counter += strlen($special_characters[$string[$char_counter]]);
