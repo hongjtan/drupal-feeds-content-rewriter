@@ -17,12 +17,12 @@ module_load_include('inc', 'feeds_content_rewriter', 'feeds_content_rewriter_fun
  *  The node that is being inserted.
  */
 function feeds_content_rewriter_node_insert($node) {
-    if($node->type == 'feed') {
+    if ($node -> type == 'feed') {
         // Initial grab of the values submitted by the user on the form.
         $form_state_values = variable_get('feeds_content_rewriter_form_state_values', array());
 
         // Grab all the values into a single array feed_data and write it into the database.
-        if(isset($form_state_values['rewrite_content']) && $form_state_values['rewrite_content'] == TRUE) {
+        if (isset($form_state_values['rewrite_content']) && $form_state_values['rewrite_content'] == TRUE) {
             $feed_data = array(
                 'nid' => $node->nid,
                 'rewrite_content' => $form_state_values['rewrite_content'],
@@ -50,13 +50,13 @@ function feeds_content_rewriter_node_insert($node) {
  *  The node that is being updated.
  */
 function feeds_content_rewriter_node_update($node) {
-    if($node -> type == 'feed') {
+    if ($node -> type == 'feed') {
         $nid = $node -> nid;
         $form_state_values = variable_get('feeds_content_rewriter_form_state_values', array());
 
         // If node ID is valid and the form values are not empty, update the database to reflect new values or add entry
         // if necessary.
-        if(isset($nid) && $nid != 0 && !empty($form_state_values)) {
+        if (isset($nid) && $nid != 0 && !empty($form_state_values)) {
             db_merge('feeds_content_rewriter')
                 ->key(array('nid' => $nid))
                 ->fields(array(
@@ -82,7 +82,7 @@ function feeds_content_rewriter_node_update($node) {
  *  The node is being deleted.
  */
 function feeds_content_rewriter_node_delete($node) {
-    if($node -> type == 'feed') {
+    if ($node -> type == 'feed') {
         $nid = $node -> nid;
 
         // Delete database entry after deleting a feed node.
@@ -105,21 +105,21 @@ function feeds_content_rewriter_node_delete($node) {
 function feeds_content_rewriter_feeds_after_parse($source, $result) {
     // Query the database to see if the current node already exists.
     $db_result = db_query("SELECT * FROM {feeds_content_rewriter} WHERE nid = :nid", array(':nid' => $source->feed_nid));
-    foreach($db_result as $record) {
-        if($record != NULL) {
+    foreach ($db_result as $record) {
+        if ($record != NULL) {
             $form_state_values = array(
                 'rewrite_content' => $record -> rewrite_content,
                 'stopwords' => $record -> stopwords,
                 'ignored_words' => $record -> ignored_words,
             );
 
-            if(isset($record -> stopwords_only)) {
+            if (isset($record -> stopwords_only)) {
                 $form_state_values['stopwords_only'] = $record -> stopwords_only;
             }
-            if(isset($record -> spintax_output)) {
+            if (isset($record -> spintax_output)) {
                 $form_state_values['spintax_output'] = $record -> spintax_output;
             }
-            if(isset($record -> rewrite_after_spin)) {
+            if (isset($record -> rewrite_after_spin)) {
                 $form_state_values['rewrite_after_spin'] = $record -> rewrite_after_spin;
             }
         }
@@ -128,48 +128,48 @@ function feeds_content_rewriter_feeds_after_parse($source, $result) {
             $form_state_values = variable_get('feeds_content_rewriter_form_state_values', array());
         }
     }
-    if(isset($form_state_values['rewrite_content']) && $form_state_values['rewrite_content'] == TRUE) {
-        if(!empty($form_state_values['stopwords'])) {
+    if (isset($form_state_values['rewrite_content']) && $form_state_values['rewrite_content'] == TRUE) {
+        if (!empty($form_state_values['stopwords'])) {
             $stopwords = explode("\n", $form_state_values['stopwords']);
         }
         else {
             $stopwords = NULL;
         }
 
-        if(!empty($form_state_values['ignored_words'])) {
+        if (!empty($form_state_values['ignored_words'])) {
             $ignored_words = explode("\n", $form_state_values['ignored_words']);
         }
         else {
             $ignored_words = NULL;
         }
 
-        if($form_state_values['stopwords_only'] && !$form_state_values['spintax_output']) {
-            foreach($result -> items as $key => $item) {
+        if ($form_state_values['stopwords_only'] && !$form_state_values['spintax_output']) {
+            foreach ($result -> items as $key => $item) {
                 $result -> items[$key]['description'] = mb_string_convert($item['description'], $stopwords, $ignored_words);
             }
         }
-        else if($form_state_values['spintax_output']) {
-            foreach($result -> items as $key => $item) {
+        elseif ($form_state_values['spintax_output']) {
+            foreach ($result -> items as $key => $item) {
                 $spun_string = spin_string($item['description'], 1);
 
-                if(is_array($spun_string)) {
+                if (is_array($spun_string)) {
                     $result -> items[$key]['description'] = implode("", $spun_string);
                 }
             }
 
-            if($form_state_values['rewrite_after_spin'] && !$form_state_values['stopwords_only']) {
-                foreach($result -> items as $key => $item) {
+            if ($form_state_values['rewrite_after_spin'] && !$form_state_values['stopwords_only']) {
+                foreach ($result -> items as $key => $item) {
                     $result -> items[$key]['description'] = mb_string_convert($item['description'], NULL, $ignored_words);
                 }
             }
-            else if($form_state_values['rewrite_after_spin'] && $form_state_values['stopwords_only']) {
-                foreach($result -> items as $key => $item) {
+            elseif ($form_state_values['rewrite_after_spin'] && $form_state_values['stopwords_only']) {
+                foreach ($result -> items as $key => $item) {
                     $result -> items[$key]['description'] = mb_string_convert($item['description'], $stopwords, $ignored_words);
                 }
             }
         }
-        else if(!$form_state_values['stopwords_only'] && !$form_state_values['spintax_output']) {
-            foreach($result -> items as $key => $item) {
+        elseif (!$form_state_values['stopwords_only'] && !$form_state_values['spintax_output']) {
+            foreach ($result -> items as $key => $item) {
                 $result -> items[$key]['description'] = mb_string_convert($item['description'], NULL, $ignored_words);
             }
         }
@@ -187,10 +187,10 @@ function feeds_content_rewriter_feeds_after_parse($source, $result) {
  * @param $form_id
  */
 function feeds_content_rewriter_form_alter(&$form, &$form_state, $form_id) {
-    if($form_id == 'feed_node_form') {
+    if ($form_id == 'feed_node_form') {
         // Default values for the form.
         if (!$stopwords = file_get_contents('stopwords.txt', TRUE))
-	    $stopwords = '';
+            $stopwords = '';
         $ignored_words = '';
         $rewrite_content = FALSE;
         $stopwords_only = FALSE;
@@ -205,29 +205,29 @@ function feeds_content_rewriter_form_alter(&$form, &$form_state, $form_id) {
             $db_result = db_query("SELECT * FROM {feeds_content_rewriter} WHERE nid = :nid", array(':nid' => $nid));
         }
 
-        foreach($db_result as $record) {
-            if($record != NULL) {
-                if(isset($record -> rewrite_content)) {
+        foreach ($db_result as $record) {
+            if ($record != NULL) {
+                if (isset($record -> rewrite_content)) {
                     $rewrite_content = $record -> rewrite_content;
                 }
-                if(isset($record -> stopwords)) {
+                if (isset($record -> stopwords)) {
                     $stopwords = $record -> stopwords;
                 }
-                if(isset($record -> ignored_words)) {
+                if (isset($record -> ignored_words)) {
                     $ignored_words = $record -> ignored_words;
                 }
-                if(isset($record -> stopwords_only)) {
+                if (isset($record -> stopwords_only)) {
                     $stopwords_only = $record -> stopwords_only;
                 }
-                if(isset($record -> spintax_output)) {
+                if (isset($record -> spintax_output)) {
                     $spintax_output = $record -> spintax_output;
                 }
-                if(isset($record -> rewrite_after_spin)) {
+                if (isset($record -> rewrite_after_spin)) {
                     $rewrite_after_spin = $record -> rewrite_after_spin;
                 }
             }
             else {
-                if(!$stopwords = file_get_contents('stopwords.txt', TRUE))
+                if (!$stopwords = file_get_contents('stopwords.txt', TRUE))
                     $stopwords = '';
                 $ignored_words = '';
                 $rewrite_content = FALSE;
@@ -239,7 +239,7 @@ function feeds_content_rewriter_form_alter(&$form, &$form_state, $form_id) {
 
 
 
-        $form['content_rewriter'] = array (
+        $form['content_rewriter'] = array(
             '#type' => 'fieldset',
             '#title' => 'Content Rewriter',
             '#collapsible' => TRUE,
@@ -248,13 +248,13 @@ function feeds_content_rewriter_form_alter(&$form, &$form_state, $form_id) {
             '#group' => 'additional_settings'
         );
 
-        $form['content_rewriter']['rewrite_content'] = array (
+        $form['content_rewriter']['rewrite_content'] = array(
             '#type' => 'checkbox',
             '#title' => 'Rewrite Content',
             '#default_value' => $rewrite_content
         );
 
-        $form['content_rewriter']['stopwords'] = array (
+        $form['content_rewriter']['stopwords'] = array(
             '#type' => 'textarea',
             '#title' => 'Stopwords',
             '#description' => 'Enter words that you would like rewritten.',
@@ -262,7 +262,7 @@ function feeds_content_rewriter_form_alter(&$form, &$form_state, $form_id) {
             '#default_value' => $stopwords
         );
 
-        $form['content_rewriter']['ignored_words'] = array (
+        $form['content_rewriter']['ignored_words'] = array(
             '#type' => 'textarea',
             '#title' => 'Ignored Words',
             '#description' => 'Enter words that you would not want rewritten.',
@@ -270,19 +270,19 @@ function feeds_content_rewriter_form_alter(&$form, &$form_state, $form_id) {
             '#default_value' => $ignored_words
         );
 
-        $form['content_rewriter']['stopwords_only'] = array (
+        $form['content_rewriter']['stopwords_only'] = array(
             '#type' => 'checkbox',
             '#title' => 'Stopwords Only',
             '#default_value' => $stopwords_only
         );
 
-        $form['content_rewriter']['spintax_output'] = array (
+        $form['content_rewriter']['spintax_output'] = array(
             '#type' => 'checkbox',
             '#title' => 'Spintax Output',
             '#default_value' => $spintax_output
         );
 
-        $form['content_rewriter']['rewrite_after_spin'] = array (
+        $form['content_rewriter']['rewrite_after_spin'] = array(
             '#type' => 'checkbox',
             '#title' => 'Rewrite After Spinning',
             '#default_value' => $rewrite_after_spin
@@ -315,16 +315,16 @@ function feeds_content_rewriter_feeds_after_import($source) {
  */
 function feeds_content_rewriter_form_validate($form, &$form_state) {
     $form_state_values = $form_state['values'];
-    if($form_state_values['rewrite_content'] == TRUE) {
-        if($form_state_values['stopwords_only'] && $form_state_values['spintax_output'] && !$form_state_values['rewrite_after_spin']) {
+    if ($form_state_values['rewrite_content'] == TRUE) {
+        if ($form_state_values['stopwords_only'] && $form_state_values['spintax_output'] && !$form_state_values['rewrite_after_spin']) {
             form_set_error('rewrite_after_spin', 'Please check the rewrite after spin checkbox if you want to rewrite on stopwords.');
         }
 
-        if(!$form_state_values['spintax_output'] && $form_state_values['rewrite_after_spin']) {
+        if (!$form_state_values['spintax_output'] && $form_state_values['rewrite_after_spin']) {
            form_set_error('rewrite_after_spin', 'Please check the spintax output checkbox if you want to rewrite after spinning content.');
         }
 
-        if($form_state_values['stopwords_only'] && empty($form_state_values['stopwords'])) {
+        if ($form_state_values['stopwords_only'] && empty($form_state_values['stopwords'])) {
             form_set_error('stopwords', 'Stopwords checked, but no stopwords exist.');
         }
     }
