@@ -1,0 +1,71 @@
+<?php
+/**
+ * @file
+ * Ranks system for drupal 6.x Install file
+ */
+
+/**
+ * Implements the schema hook
+ * @return array with database schema
+ */
+function feeds_content_rewriter_schema() {
+    $schema['feeds_content_rewriter'] = array(
+        'description' => 'Feeds Content Rewriter table which stores all stopwords and settings for each individual feed.',
+        'fields' => array(
+            'nid' => array(
+                'description' => 'Node ID of the feed, also the primary key.',
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+            ),
+            'rewrite_content' => array(
+                'description' => 'Boolean value whether or not to rewrite content.',
+                'type' => 'int',
+                'size' => 'tiny',
+                'not null' => TRUE,
+                'default' => 0,
+            ),
+            'stopwords' => array(
+                'description' => 'All of the stopwords for the feed.',
+                'type' => 'blob',
+                'not null' => FALSE),
+            'ignored_words' => array(
+                'description' => 'All of the ignored words for the feed.',
+                'type' => 'blob',
+                'not null' => FALSE,
+            ),
+            'stopwords_only' => array(
+                'description' => 'Boolean value whether or not to use the stopwords',
+                'type' => 'int',
+                'size' => 'tiny',
+                'not null' => TRUE,
+                'default' => 0,
+            ),
+            'spintax_output' => array(
+                'description' => 'Boolean value whether or not the feed is written in spintax format and to parse it.',
+                'type' => 'int',
+                'size' => 'tiny',
+                'not null' => TRUE,
+                'default' => 0
+            ),
+            'rewrite_after_spin' => array(
+                'description' => 'Boolean value whether or not to rewrite after spintax format is parsed.',
+                'type' => 'int',
+                'size' => 'tiny',
+                'not null' => TRUE,
+                'default' => 0
+            ),
+        ),
+        'primary key' => array('nid'),
+    );
+
+    return $schema;
+}
+
+/**
+* Uninstalls the module from the system
+* @return void there is no return
+*/
+function feeds_content_rewriter_uninstall() {
+    drupal_uninstall_schema('feeds_content_rewriter');
+}
