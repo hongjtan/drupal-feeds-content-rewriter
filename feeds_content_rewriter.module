@@ -228,7 +228,7 @@ function feeds_content_rewriter_form_alter(&$form, &$form_state, $form_id) {
             }
             else {
                 if(!$stopwords = file_get_contents('stopwords.txt', TRUE))
-		    $stopwords = '';
+                    $stopwords = '';
                 $ignored_words = '';
                 $rewrite_content = FALSE;
                 $stopwords_only = FALSE;
